@@ -61,6 +61,8 @@ android {
 dependencies {
     api fileTree(dir: "libs", include: ["*.jar"])
 
+    //添加pyramid.aar引用    
+    implementation files('libs\\pyramid.aar')
 
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
     implementation 'com.google.zxing:core:3.4.1'
