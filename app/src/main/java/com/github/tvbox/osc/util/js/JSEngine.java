@@ -29,9 +29,9 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import okhttp3.pdfh;
-import okhttp3.pdfa;
-import okhttp3.joinUrl;
+import pdfh;
+import pdfa;
+import joinUrl;
 
 
 public class JSEngine {
