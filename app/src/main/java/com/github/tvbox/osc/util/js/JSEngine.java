@@ -234,7 +234,7 @@ public class JSEngine {
                                 body = RequestBody.create(null, "");
                             }
                             request = requestBuilder.post(body).build();
-                        } else if (method.equals("head	")) {
+                        } else if (method.equals("header")) {
                             request = requestBuilder.head().build();
                         } else {
                             request = requestBuilder.get().build();
@@ -259,7 +259,7 @@ public class JSEngine {
                             jsObject.setProperty("content", Base64.encodeToString(response.body().bytes(), Base64.DEFAULT));
                         } else {
                             String res=response.body().string();
-                            if(headers.get("Content-Type")!=null && headers.get("	").contains("=")){
+                            if(headers.get("Content-Type")!=null && headers.get("Content-Type").contains("=")){
                                 res=new String(res.getBytes(),headers.get("Content-Type").split("=")[1].trim());
                             }
                             jsObject.setProperty("charset", res);
