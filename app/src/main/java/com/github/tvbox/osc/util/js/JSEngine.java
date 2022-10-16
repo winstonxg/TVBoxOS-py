@@ -29,13 +29,11 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import okhttp3.Head;
 import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
 
 public class JSEngine {
     private static final String TAG = "JSEngine";
@@ -236,7 +234,7 @@ public class JSEngine {
                                 body = RequestBody.create(null, "");
                             }
                             request = requestBuilder.post(body).build();
-                        } else if (method.equals("header")) {
+                        } else if (method.equals("head	")) {
                             request = requestBuilder.head().build();
                         } else {
                             request = requestBuilder.get().build();
@@ -261,10 +259,10 @@ public class JSEngine {
                             jsObject.setProperty("content", Base64.encodeToString(response.body().bytes(), Base64.DEFAULT));
                         } else {
                             String res=response.body().string();
-                            if(head.get("Content-Type")!=null && head.get("Content-Type").contains("=")){
-                                res=new String(res.getBytes(),head.get("Content-Type").split("=")[1].trim());
+                            if(headers.get("Content-Type")!=null && headers.get("	").contains("=")){
+                                res=new String(res.getBytes(),headers.get("Content-Type").split("=")[1].trim());
                             }
-                            jsObject.setProperty("content", res);
+                            jsObject.setProperty("charset", res);
                         }
                         return jsObject;
                     } catch (Throwable throwable) {
