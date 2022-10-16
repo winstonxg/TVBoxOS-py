@@ -260,8 +260,8 @@ public class JSEngine {
                             jsObject.setProperty("content", Base64.encodeToString(response.body().bytes(), Base64.DEFAULT));
                         } else {
                             String res=response.body().string();
-                            if(headers.get("Content-Type")!=null && headers.get("Content-Type").contains("=")){
-                                res=new String(res.getBytes(),headers.get("Content-Type").split("=")[1].trim());
+                            if(head.get("Content-Type")!=null && head.get("Content-Type").contains("=")){
+                                res=new String(res.getBytes(),head.get("Content-Type").split("=")[1].trim());
                             }
                             jsObject.setProperty("content", res);
                         }
