@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import okhttp3.Head;
 import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.Request;
