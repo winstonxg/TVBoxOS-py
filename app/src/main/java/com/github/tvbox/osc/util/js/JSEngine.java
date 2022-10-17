@@ -262,7 +262,7 @@ public class JSEngine {
                             if(headers.get("Content-Type")!=null && headers.get("Content-Type").contains("=")){
                                 res=new String(res.getBytes(),headers.get("Content-Type").split("=")[1].trim());
                             }
-                            jsObject.setProperty("charset", res);
+                            jsObject.setProperty("content", res);
                         }
                         return jsObject;
                     } catch (Throwable throwable) {
