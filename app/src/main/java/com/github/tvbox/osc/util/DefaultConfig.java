@@ -139,7 +139,7 @@ public class DefaultConfig {
                     "http((?!http).)*?dycdn-tos\\.pstatp[^\\?]*|" +
                     "http((?!http).)*?cdn-tos|" +
                     "http((?!http).)*?obj/tos|" +
-                    "http((?!http).)*?video/tos*"
+                    "http((?!http).)*?video/tos*" +
                     "http.*?/player/m3u8play\\.php\\?url=.*|" +
                     "http.*?/player/.*?[pP]lay\\.php\\?url=.*|" +
                     "http.*?/playlist/m3u8/\\?vid=.*|" +
