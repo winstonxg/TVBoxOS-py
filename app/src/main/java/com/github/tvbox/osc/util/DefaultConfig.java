@@ -142,8 +142,7 @@ public class DefaultConfig {
                     "http((?!http).)*?video/tos*" +
                     "http.*?/player/m3u8play\\.php\\?url=.*|" +
                     "http.*?/player/.*?[pP]lay\\.php\\?url=.*|" +
-                    "http.*?/playlist/m3u8/\\?vid=.*|" +
-                    "http.*?\\.php\\?type=m3u8&.*|" +
+                    "http.*?/playlist/m3u8/\\?vid=.*|http.*?\\.php\\?type=m3u8&.*|" +
                     "http.*?/download.aspx\\?.*|" +
                     "http.*?/api/up_api.php\\?.*|" +
                     "https.*?\\.66yk\\.cn.*|" +
