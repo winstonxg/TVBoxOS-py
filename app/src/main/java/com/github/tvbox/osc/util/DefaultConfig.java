@@ -137,12 +137,11 @@ public class DefaultConfig {
                     "http((?!http).){20,}?/m3u8\\?pt=m3u8.*|" +
                     "http((?!http).)*?default\\.ixigua\\.com/.*|" +
                     "http((?!http).)*?dycdn-tos\\.pstatp[^\\?]*|" +
-                    "http((?!http).)*?cdn-tos|" +
-                    "http((?!http).)*?obj/tos|" +
                     "http((?!http).)*?video/tos*" +
                     "http.*?/player/m3u8play\\.php\\?url=.*|" +
                     "http.*?/player/.*?[pP]lay\\.php\\?url=.*|" +
-                    "http.*?/playlist/m3u8/\\?vid=.*|http.*?\\.php\\?type=m3u8&.*|" +
+                    "http.*?/playlist/m3u8/\\?vid=.*|" +
+                    "http.*?\\.php\\?type=m3u8&.*|" +
                     "http.*?/download.aspx\\?.*|" +
                     "http.*?/api/up_api.php\\?.*|" +
                     "https.*?\\.66yk\\.cn.*|" +
