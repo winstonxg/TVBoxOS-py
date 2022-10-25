@@ -132,12 +132,11 @@ public class DefaultConfig {
 //    }
 
     private static final Pattern snifferMatch = Pattern.compile(
-                    "http((?!http).){20,}?\\.(m3u8|mp4|flv|avi|mkv|rm|wmv|mpg|m4a|vdat)\\?.*|" +
-                    "http((?!http).){20,}\\.(m3u8|mp4|flv|avi|mkv|rm|wmv|mpg|m4a|vdat)|" +
+                    "http((?!http).){20,}?\\.(m3u8|mp4|mp3|m4a|flv|avi|mkv|rm|wmv|mpg)\\?.*|" +
+                    "http((?!http).){20,}\\.(m3u8|mp4|mp3|m4a|flv|avi|mkv|rm|wmv|mpg)|" +
                     "http((?!http).){20,}?/m3u8\\?pt=m3u8.*|" +
                     "http((?!http).)*?default\\.ixigua\\.com/.*|" +
                     "http((?!http).)*?dycdn-tos\\.pstatp[^\\?]*|" +
-                    "http((?!http).)*?video/tos*" +
                     "http.*?/player/m3u8play\\.php\\?url=.*|" +
                     "http.*?/player/.*?[pP]lay\\.php\\?url=.*|" +
                     "http.*?/playlist/m3u8/\\?vid=.*|" +
@@ -145,7 +144,10 @@ public class DefaultConfig {
                     "http.*?/download.aspx\\?.*|" +
                     "http.*?/api/up_api.php\\?.*|" +
                     "https.*?\\.66yk\\.cn.*|" +
-                    "http((?!http).)*?netease\\.com/file/.*"
+                    "http((?!http).)*?netease\\.com/file/.*" +
+                    "http((?!http).)*?cdn-tos|" +
+                    "http((?!http).)*?obj/tos|" +
+                    "http((?!http).)*?video/tos*"
     );
     public static boolean isVideoFormat(String url) {
         if (url.contains("=http") || url.contains(".html")) {
