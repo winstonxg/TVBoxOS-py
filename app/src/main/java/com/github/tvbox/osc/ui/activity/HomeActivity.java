@@ -625,7 +625,7 @@ public class HomeActivity extends BaseActivity {
             });
             dialog.show();
         }
-   
+    }
     void showSiteSwitch2() {
         List<SourceBean> sites = ApiConfig.get().getSourceBeanList();        
         if (sites.size() > 0) {
