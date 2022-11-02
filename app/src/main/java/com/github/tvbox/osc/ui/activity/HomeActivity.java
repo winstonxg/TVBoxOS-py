@@ -207,7 +207,7 @@ public class HomeActivity extends BaseActivity {
             public void onClick(View v) {
                 dataInitOk = false;
                 jarInitOk = true;
-                showSiteSwitch();
+                showSiteSwitch2();
             }
         });
         tvName.setOnLongClickListener(new View.OnLongClickListener() {
@@ -505,7 +505,7 @@ public class HomeActivity extends BaseActivity {
         int keyCode = event.getKeyCode();
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
             if (keyCode == KeyEvent.KEYCODE_MENU) {
-                showSiteSwitch();
+                showSiteSwitch2();
             }
         } else if (event.getAction() == KeyEvent.ACTION_UP) {
 
