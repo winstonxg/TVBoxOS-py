@@ -627,7 +627,7 @@ public class HomeActivity extends BaseActivity {
         }
         
         if (sites.size() > 0) {
-            SelectDialog<SourceBean> dialog = new SelectDialog<>(SourceHomeActivity.this);
+            SelectDialog<SourceBean> dialog = new SelectDialog<>(HomeActivity.this);
             dialog.setTip("点击打开源主页");
             TvRecyclerView tvRecyclerView = dialog.findViewById(R.id.list);
             tvRecyclerView.setLayoutManager(new V7GridLayoutManager(dialog.getContext(), 3));
