@@ -625,7 +625,9 @@ public class HomeActivity extends BaseActivity {
             });
             dialog.show();
         }
-        
+   
+    void showSiteSwitch2() {
+        List<SourceBean> sites = ApiConfig.get().getSourceBeanList();        
         if (sites.size() > 0) {
             SelectDialog<SourceBean> dialog = new SelectDialog<>(HomeActivity.this);
             dialog.setTip("点击打开源主页");
