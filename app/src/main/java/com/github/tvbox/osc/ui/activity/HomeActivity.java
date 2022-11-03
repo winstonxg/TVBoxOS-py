@@ -589,6 +589,12 @@ public class HomeActivity extends BaseActivity {
             String homeSourceKey = ApiConfig.get().getHomeSourceBean().getKey();
             SelectDialog<SourceBean> dialog = new SelectDialog<>(HomeActivity.this);
             dialog.setTip("请选择首页数据源");
+            TvRecyclerView tvRecyclerView = dialog.findViewById(R.id.list);
+            tvRecyclerView.setLayoutManager(new V7GridLayoutManager(dialog.getContext(), 3));
+            ConstraintLayout cl_root = dialog.findViewById(R.id.cl_root);
+            ViewGroup.LayoutParams clp = cl_root.getLayoutParams();
+            clp.width = AutoSizeUtils.mm2px(dialog.getContext(), 800);
+
             dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<SourceBean>() {
                 @Override
                 public void click(SourceBean value, int pos) {
