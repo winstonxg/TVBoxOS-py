@@ -636,7 +636,7 @@ public class HomeActivity extends BaseActivity {
         List<SourceBean> sites = ApiConfig.get().getSourceBeanList();        
         if (sites.size() > 0) {
             SelectDialog<SourceBean> dialog = new SelectDialog<>(HomeActivity.this);
-            dialog.setTip("点击打开源主页");
+            dialog.setTip("点击打开临时源");
             TvRecyclerView tvRecyclerView = dialog.findViewById(R.id.list);
             tvRecyclerView.setLayoutManager(new V7GridLayoutManager(dialog.getContext(), 3));
             ConstraintLayout cl_root = dialog.findViewById(R.id.cl_root);
@@ -650,7 +650,7 @@ public class HomeActivity extends BaseActivity {
                     bundle.putString("type", "SourceHome");
                     bundle.putStringArray("sourceKey", new String[]{value.getKey()});
                     jumpActivity(SourceHomeActivity.class, bundle);
-                    //dialog.dismiss();
+                    dialog.dismiss();
                 }
 
                 @Override
