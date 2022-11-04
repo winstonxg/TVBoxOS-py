@@ -809,7 +809,7 @@ public class VodController extends BaseController {
             case VideoView.STATE_IDLE:
                 break;
             case VideoView.STATE_PLAYING:
-                bottomCenterContainer.setVisibility(VISIBLE);
+                bottomCenterContainer.setVisibility(GONE);
                 startProgress();
                 break;
             case VideoView.STATE_PAUSED:
@@ -849,7 +849,7 @@ public class VodController extends BaseController {
     }
 
     void hideBottom() {
-        bottomCenterContainer.setVisibility(VISIBLE);
+        bottomCenterContainer.setVisibility(GONE);
         mHandler.removeMessages(1002);
         mHandler.sendEmptyMessage(1003);
     }
@@ -909,7 +909,7 @@ public class VodController extends BaseController {
                 float speed = 3.0f;
                 mPlayerConfig.put("sp", speed);
                 updatePlayerCfgView();
-                mBottomRoot.setVisibility(VISIBLE);
+                bottomCenterContainer.setVisibility(VISIBLE);
                 listener.updatePlayerCfg();
                 mControlWrapper.setSpeed(speed);
             } catch (JSONException f) {
@@ -927,7 +927,7 @@ public class VodController extends BaseController {
                     float speed = speed_old;
                     mPlayerConfig.put("sp", speed);
                     updatePlayerCfgView();
-                    mBottomRoot.setVisibility(GONE);
+                    bottomCenterContainer.setVisibility(GONE);
                     listener.updatePlayerCfg();
                     mControlWrapper.setSpeed(speed);
                 } catch (JSONException f) {
