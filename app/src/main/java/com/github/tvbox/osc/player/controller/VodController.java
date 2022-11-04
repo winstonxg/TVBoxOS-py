@@ -559,20 +559,7 @@ public class VodController extends BaseController {
                 return true;
             }
         });
-        mPlayerTimeStepBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                myHandle.removeCallbacks(myRunnable);
-                myHandle.postDelayed(myRunnable, myHandleSeconds);
-                int step = Hawk.get(HawkConfig.PLAY_TIME_STEP, 5);
-                step += 5;
-                if (step > 30) {
-                    step = 5;
-                }
-                Hawk.put(HawkConfig.PLAY_TIME_STEP, step);
-                updatePlayerCfgView();
-            }
-        });
+
         mZimuBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
