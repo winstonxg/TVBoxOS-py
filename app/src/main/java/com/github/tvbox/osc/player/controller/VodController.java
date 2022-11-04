@@ -559,20 +559,20 @@ public class VodController extends BaseController {
                 return true;
             }
         });
-//        mPlayerTimeStepBtn.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                myHandle.removeCallbacks(myRunnable);
-//                myHandle.postDelayed(myRunnable, myHandleSeconds);
-//                int step = Hawk.get(HawkConfig.PLAY_TIME_STEP, 5);
-//                step += 5;
-//                if (step > 30) {
-//                    step = 5;
-//                }
-//                Hawk.put(HawkConfig.PLAY_TIME_STEP, step);
-//                updatePlayerCfgView();
-//            }
-//        });
+        mPlayerTimeStepBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myHandle.removeCallbacks(myRunnable);
+                myHandle.postDelayed(myRunnable, myHandleSeconds);
+                int step = Hawk.get(HawkConfig.PLAY_TIME_STEP, 5);
+                step += 5;
+                if (step > 30) {
+                    step = 5;
+                }
+                Hawk.put(HawkConfig.PLAY_TIME_STEP, step);
+                updatePlayerCfgView();
+            }
+        });
         mZimuBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -898,10 +898,10 @@ public class VodController extends BaseController {
             fromLongPress = true;
             try {
                 speed_old = (float) mPlayerConfig.getDouble("sp");
-                float speed = 3.0f;
+                float speed = 5.0f;
                 mPlayerConfig.put("sp", speed);
                 updatePlayerCfgView();
-                mBottomRoot.setVisibility(VISIBLE);
+                mBottomRoot.setVisibility(GONE);
                 listener.updatePlayerCfg();
                 mControlWrapper.setSpeed(speed);
             } catch (JSONException f) {
