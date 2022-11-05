@@ -384,7 +384,7 @@ public class ApiConfig {
                 liveChannelGroup.setGroupName(url);
                 liveChannelGroupList.add(liveChannelGroup);
             } else {
-                if(lives.contains("group")){
+                if(!lives.contains("type")){
                     loadLives(infoJson.get("lives").getAsJsonArray());
                 }else {
                     JsonObject fengMiLives = infoJson.get("lives").getAsJsonArray().get(0).getAsJsonObject();
