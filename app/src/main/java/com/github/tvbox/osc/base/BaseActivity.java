@@ -68,7 +68,7 @@ public abstract class BaseActivity extends AppCompatActivity implements CustomAd
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             try {
                 WindowManager.LayoutParams lp = this.getWindow().getAttributes();
-                lp.layoutInDisplayCutoutMode = Hawk.get(HawkConfig.LAYOUTINDISPLAYCUTOUTMODE, defaultValue: 0);
+                lp.layoutInDisplayCutoutMode = Hawk.get(HawkConfig.LAYOUTINDISPLAYCUTOUTMODE,defaultValue:0);
                 this.getWindow().setAttributes(lp);
             } catch (Throwable ignored) {
             }
