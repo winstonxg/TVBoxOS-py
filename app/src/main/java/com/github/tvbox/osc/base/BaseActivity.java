@@ -63,23 +63,23 @@ public abstract class BaseActivity extends AppCompatActivity implements CustomAd
         init();
     }
 
-    @Override
-    protected void onResume() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            try {
-                WindowManager.LayoutParams lp = this.getWindow().getAttributes();
-                lp.layoutInDisplayCutoutMode = Hawk.get(HawkConfig.LAYOUTINDISPLAYCUTOUTMODE,defaultValue:0);
-                this.getWindow().setAttributes(lp);
-            } catch (Throwable ignored) {
-            }
-        }
-    }
 //    @Override
 //    protected void onResume() {
-//        super.onResume();
-//        hideSysBar();
-//        changeWallpaper(false);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+//            try {
+//                WindowManager.LayoutParams lp = this.getWindow().getAttributes();
+//                lp.layoutInDisplayCutoutMode = Hawk.get(HawkConfig.LAYOUTINDISPLAYCUTOUTMODE,defaultValue:0);
+//                this.getWindow().setAttributes(lp);
+//            } catch (Throwable ignored) {
+//            }
+//        }
 //    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        hideSysBar(true);
+        changeWallpaper(false);
+    }
 
     public void hideSysBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
