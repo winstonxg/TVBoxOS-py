@@ -29,7 +29,7 @@
         android:largeHeap="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar"
+        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         android:usesCleartextTraffic="true">
 
         <activity
