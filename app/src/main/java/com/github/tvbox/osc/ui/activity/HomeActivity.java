@@ -66,6 +66,7 @@ import java.util.Date;
 import java.util.List;
 
 import me.jessyan.autosize.utils.AutoSizeUtils;
+import android.view.WindowManager;
 
 public class HomeActivity extends BaseActivity {
     private LinearLayout topLayout;
@@ -454,12 +455,23 @@ public class HomeActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mHandler.post(mRunnable);
-    }
+//    @Override
+//    protected void onResume() {
+//       super.onResume();
+//        mHandler.post(mRunnable);
+//    }
 
+    @Override
+        protected void onResume() {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                try {
+                    WindowManager.LayoutParams lp = this.getWindow().getAttributes();
+                    lp.layoutInDisplayCutoutMode = get(Config.LAYOUTINDISPLAYCUTOUTMODE, defaultValue: 1);
+                    this.getWindow().setAttributes(lp);
+                } catch (Throwable ignored) {
+                }
+            }
+        }
 
     @Override
     protected void onPause() {
