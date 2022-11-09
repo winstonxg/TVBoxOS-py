@@ -455,23 +455,11 @@ public class HomeActivity extends BaseActivity {
         }
     }
 
-//    @Override
-//    protected void onResume() {
-//       super.onResume();
-//        mHandler.post(mRunnable);
-//    }
-
     @Override
-        protected void onResume() {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                try {
-                    WindowManager.LayoutParams lp = this.getWindow().getAttributes();
-                    lp.layoutInDisplayCutoutMode = get(Config.LAYOUTINDISPLAYCUTOUTMODE, defaultValue: 1);
-                    this.getWindow().setAttributes(lp);
-                } catch (Throwable ignored) {
-                }
-            }
-        }
+    protected void onResume() {
+       super.onResume();
+       mHandler.post(mRunnable);
+    }
 
     @Override
     protected void onPause() {
