@@ -184,15 +184,7 @@ public class HomeActivity extends BaseActivity {
                         showSiteSwitch();
                     }
                 }
-            }
-            
-            public boolean onItemLongClick(TvRecyclerView parent, View itemView, int position) {
-                dataInitOk = false;
-                jarInitOk = true;
-                showSiteSwitch2();
-                return true;
-            }
-
+            }            
         });
 
         this.mGridView.setOnInBorderKeyEventListener(new TvRecyclerView.OnInBorderKeyEventListener() {
