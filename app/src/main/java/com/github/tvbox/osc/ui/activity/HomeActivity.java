@@ -181,7 +181,7 @@ public class HomeActivity extends BaseActivity {
                     if ((baseLazyFragment instanceof GridFragment) && !sortAdapter.getItem(position).filters.isEmpty()) {// 弹出筛选
                         ((GridFragment) baseLazyFragment).showFilter();
                     } else if (baseLazyFragment instanceof UserFragment) {
-                        showSiteSwitch();
+                        showSiteSwitch2();
                     }
                 }
             }
@@ -208,7 +208,7 @@ public class HomeActivity extends BaseActivity {
             public void onClick(View v) {
                 dataInitOk = false;
                 jarInitOk = true;
-                showSiteSwitch2();
+                showSiteSwitch();
             }
         });
         tvName.setOnLongClickListener(new View.OnLongClickListener() {
@@ -505,7 +505,7 @@ public class HomeActivity extends BaseActivity {
         int keyCode = event.getKeyCode();
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
             if (keyCode == KeyEvent.KEYCODE_MENU) {
-                showSiteSwitch2();
+                showSiteSwitch();
             }
         } else if (event.getAction() == KeyEvent.ACTION_UP) {
 
@@ -588,7 +588,7 @@ public class HomeActivity extends BaseActivity {
         if (sites.size() > 0) {
             String homeSourceKey = ApiConfig.get().getHomeSourceBean().getKey();
             SelectDialog<SourceBean> dialog = new SelectDialog<>(HomeActivity.this);
-            dialog.setTip("请选择首页数据源");
+            dialog.setTip("首页固定数据源");
             TvRecyclerView tvRecyclerView = dialog.findViewById(R.id.list);
             tvRecyclerView.setLayoutManager(new V7GridLayoutManager(dialog.getContext(), 3));
             ConstraintLayout cl_root = dialog.findViewById(R.id.cl_root);
