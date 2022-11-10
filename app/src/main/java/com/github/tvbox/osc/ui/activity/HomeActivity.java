@@ -185,16 +185,6 @@ public class HomeActivity extends BaseActivity {
                     }
                 }
             }
-            public void onItemLongClick(TvRecyclerView parent, View itemView, int position) {
-                if (itemView != null && currentSelected == position) {
-                    BaseLazyFragment baseLazyFragment = fragments.get(currentSelected);
-                    if ((baseLazyFragment instanceof GridFragment) && !sortAdapter.getItem(position).filters.isEmpty()) {// 弹出筛选
-                        ((GridFragment) baseLazyFragment).showFilter();
-                    } else if (baseLazyFragment instanceof UserFragment) {
-                        showSiteSwitch2();
-                    }
-                }
-            }
         });
 
         this.mGridView.setOnInBorderKeyEventListener(new TvRecyclerView.OnInBorderKeyEventListener() {
@@ -224,13 +214,17 @@ public class HomeActivity extends BaseActivity {
         tvName.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                Bundle bundle = new Bundle();
-                bundle.putBoolean("useCache", true);
-                intent.putExtras(bundle);
-                HomeActivity.this.startActivity(intent);
-                return true;
+                dataInitOk = false;
+                jarInitOk = true;
+                showSiteSwitch2();
+
+          //      Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+          //      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+          //      Bundle bundle = new Bundle();
+          //      bundle.putBoolean("useCache", true);
+          //      intent.putExtras(bundle);
+          //      HomeActivity.this.startActivity(intent);
+          //      return true;
             }
         });
         setLoadSir(this.contentLayout);
