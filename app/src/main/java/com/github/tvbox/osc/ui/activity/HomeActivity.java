@@ -213,11 +213,11 @@ public class HomeActivity extends BaseActivity {
         });
         tvName.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public boolean onLongClick(View v) {
+            public void onLongClick(View v) {         
                 dataInitOk = false;
                 jarInitOk = true;
                 showSiteSwitch2();
-
+          //public boolean onLongClick(View v) {
           //      Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
           //      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
           //      Bundle bundle = new Bundle();
