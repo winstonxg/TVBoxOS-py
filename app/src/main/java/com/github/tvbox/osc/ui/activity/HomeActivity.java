@@ -185,7 +185,7 @@ public class HomeActivity extends BaseActivity {
                     }
                 }
             }
-            @Override
+            
             public boolean onItemLongClick(TvRecyclerView parent, View itemView, int position) {
                 if (itemView != null && currentSelected == position) {
                     BaseLazyFragment baseLazyFragment = fragments.get(currentSelected);
