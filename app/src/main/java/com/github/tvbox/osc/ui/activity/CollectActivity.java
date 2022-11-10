@@ -143,17 +143,10 @@ public class CollectActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
+        if (delMode) {
+            toggleDelMode();
+            return;
+        }
         super.onBackPressed();
-        if (mExecutor == null) return;
-        mExecutor.shutdownNow();
-        mExecutor = null;
     }
-    //@Override
-    //public void onBackPressed() {
-    //    if (delMode) {
-    //        toggleDelMode();
-    //        return;
-    //    }
-    //    super.onBackPressed();
-    //}
 }
