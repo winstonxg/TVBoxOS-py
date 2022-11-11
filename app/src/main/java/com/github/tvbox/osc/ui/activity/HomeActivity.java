@@ -182,7 +182,7 @@ public class HomeActivity extends BaseActivity {
                     if ((baseLazyFragment instanceof GridFragment) && !sortAdapter.getItem(position).filters.isEmpty()) {// 弹出筛选
                         ((GridFragment) baseLazyFragment).showFilter();
                     } else if (baseLazyFragment instanceof UserFragment) {
-                        showSiteSwitch2();
+                        showSiteSwitch();
                     }
                 }
             }
@@ -597,7 +597,7 @@ public class HomeActivity extends BaseActivity {
             ConstraintLayout cl_root = dialog.findViewById(R.id.cl_root);
             ViewGroup.LayoutParams clp = cl_root.getLayoutParams();
             clp.width = AutoSizeUtils.mm2px(dialog.getContext(), 380+200*spanCount);
-            dialog.setTip("首页固定数据源");
+            dialog.setTip("请选择首页数据源");
             dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<SourceBean>() {
                 @Override
                 public void click(SourceBean value, int pos) {
@@ -608,47 +608,6 @@ public class HomeActivity extends BaseActivity {
                     bundle.putBoolean("useCache", true);
                     intent.putExtras(bundle);
                     HomeActivity.this.startActivity(intent);
-                }
-
-                @Override
-                public String getDisplay(SourceBean val) {
-                    return val.getName();
-                }
-            }, new DiffUtil.ItemCallback<SourceBean>() {
-                @Override
-                public boolean areItemsTheSame(@NonNull @NotNull SourceBean oldItem, @NonNull @NotNull SourceBean newItem) {
-                    return oldItem == newItem;
-                }
-
-                @Override
-                public boolean areContentsTheSame(@NonNull @NotNull SourceBean oldItem, @NonNull @NotNull SourceBean newItem) {
-                    return oldItem.getKey().equals(newItem.getKey());
-                }
-            }, sites, sites.indexOf(ApiConfig.get().getHomeSourceBean()));
-            dialog.show();
-        }
-    }
-    void showSiteSwitch2() {
-        List<SourceBean> siites = ApiConfig.get().getSourceBeanList();
-        if (sites.size() > 0) {
-            SelectDialog<SourceBean> dialog = new SelectDialog<>(HomeActivity.this);
-            TvRecyclerView tvRecyclerView = dialog.findViewById(R.id.list);
-            int spanCount;
-            spanCount = (int)Math.floor(sites.size()/60);
-            spanCount = Math.min(spanCount, 2);
-            tvRecyclerView.setLayoutManager(new V7GridLayoutManager(dialog.getContext(), spanCount+1));
-            ConstraintLayout cl_root = dialog.findViewById(R.id.cl_root);
-            ViewGroup.LayoutParams clp = cl_root.getLayoutParams();
-            clp.width = AutoSizeUtils.mm2px(dialog.getContext(), 380+200*spanCount);
-            dialog.setTip("打开临时数据源");
-            dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<SourceBean>() {
-                @Override
-                public void click(SourceBean value, int pos) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("type", "SourceHome");
-                    bundle.putStringArray("sourceKey", new String[]{value.getKey()});
-                    jumpActivity(SourceHomeActivity.class, bundle);
-                    //dialog.dismiss();
                 }
 
                 @Override
