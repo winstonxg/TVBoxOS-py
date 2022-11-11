@@ -14,4 +14,8 @@
     android:text="@{name}"
     android:textColor="@color/color_FFFFFF"
     android:textSize="@dimen/ts_22"
+    android:maxLines="1"
+    android:ellipsize="marquee"
+    android:singleLine="true"
+    android:marqueeRepeatLimit="marquee_forever"
     tools:text="11111111111111" />
