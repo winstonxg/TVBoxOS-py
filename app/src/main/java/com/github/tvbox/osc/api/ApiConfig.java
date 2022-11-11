@@ -457,7 +457,8 @@ public class ApiConfig {
             ijkCodes = new ArrayList<>();
             boolean foundOldSelect = false;
             String ijkCodec = Hawk.get(HawkConfig.IJK_CODEC, "");
-            for (JsonElement opt : defaultJson.get("ijk").getAsJsonArray()) {
+            JsonArray ijkJsonArray = infoJson.has("ads")?infoJson.get("ijk").getAsJsonArray():defaultJson.get("ijk").getAsJsonArray();
+            for (JsonElement opt : ijkJsonArray) {
                 JsonObject obj = (JsonObject) opt;
                 String name = obj.get("group").getAsString();
                 LinkedHashMap<String, String> baseOpt = new LinkedHashMap<>();
