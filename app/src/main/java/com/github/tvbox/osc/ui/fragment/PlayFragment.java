@@ -1004,7 +1004,6 @@ public class PlayFragment extends BaseLazyFragment {
             } catch (Throwable e) {
                 e.printStackTrace();
             }
-            //OkGo.<String>get(pb.getUrl() + webUrl)
             OkGo.<String>get(pb.getUrl() + encodeUrl(webUrl))
                     .tag("json_jx")
                     .headers(reqHeaders)
@@ -1173,6 +1172,7 @@ public class PlayFragment extends BaseLazyFragment {
             });
         }
     }
+
     private String encodeUrl(String url) {
         try {
             return URLEncoder.encode(url, "UTF-8");
