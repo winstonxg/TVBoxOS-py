@@ -18,8 +18,9 @@ import android.view.animation.BounceInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.constraintlayout.widget.ConstraintLayout;
+
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
@@ -52,8 +53,9 @@ import com.github.tvbox.osc.util.LOG;
 import com.github.tvbox.osc.viewmodel.SourceViewModel;
 import com.orhanobut.hawk.Hawk;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
-import com.owen.tvrecyclerview.widget.V7LinearLayoutManager;
 import com.owen.tvrecyclerview.widget.V7GridLayoutManager;
+import com.owen.tvrecyclerview.widget.V7LinearLayoutManager;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -66,7 +68,6 @@ import java.util.Date;
 import java.util.List;
 
 import me.jessyan.autosize.utils.AutoSizeUtils;
-import android.view.WindowManager;
 
 public class HomeActivity extends BaseActivity {
     private LinearLayout topLayout;
@@ -184,7 +185,7 @@ public class HomeActivity extends BaseActivity {
                         showSiteSwitch();
                     }
                 }
-            }            
+            }
         });
 
         this.mGridView.setOnInBorderKeyEventListener(new TvRecyclerView.OnInBorderKeyEventListener() {
@@ -213,16 +214,13 @@ public class HomeActivity extends BaseActivity {
         });
         tvName.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public boolean onLongClick(View v) {         
-                dataInitOk = false;
-                jarInitOk = true;
-                showSiteSwitch2();
-          //      Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-          //      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-          //      Bundle bundle = new Bundle();
-          //      bundle.putBoolean("useCache", true);
-          //      intent.putExtras(bundle);
-          //      HomeActivity.this.startActivity(intent);
+            public boolean onLongClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("useCache", true);
+                intent.putExtras(bundle);
+                HomeActivity.this.startActivity(intent);
                 return true;
             }
         });
@@ -460,9 +458,10 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void onResume() {
-       super.onResume();
-       mHandler.post(mRunnable);
+        super.onResume();
+        mHandler.post(mRunnable);
     }
+
 
     @Override
     protected void onPause() {
@@ -589,15 +588,16 @@ public class HomeActivity extends BaseActivity {
     void showSiteSwitch() {
         List<SourceBean> sites = ApiConfig.get().getSourceBeanList();
         if (sites.size() > 0) {
-            String homeSourceKey = ApiConfig.get().getHomeSourceBean().getKey();
             SelectDialog<SourceBean> dialog = new SelectDialog<>(HomeActivity.this);
-            dialog.setTip("首页固定数据源");
             TvRecyclerView tvRecyclerView = dialog.findViewById(R.id.list);
-            tvRecyclerView.setLayoutManager(new V7GridLayoutManager(dialog.getContext(), 3));
+            int spanCount;
+            spanCount = (int)Math.floor(sites.size()/60);
+            spanCount = Math.min(spanCount, 2);
+            tvRecyclerView.setLayoutManager(new V7GridLayoutManager(dialog.getContext(), spanCount+1));
             ConstraintLayout cl_root = dialog.findViewById(R.id.cl_root);
             ViewGroup.LayoutParams clp = cl_root.getLayoutParams();
-            clp.width = AutoSizeUtils.mm2px(dialog.getContext(), 800);
-
+            clp.width = AutoSizeUtils.mm2px(dialog.getContext(), 380+200*spanCount);
+            dialog.setTip("请选择首页数据源");
             dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<SourceBean>() {
                 @Override
                 public void click(SourceBean value, int pos) {
@@ -625,53 +625,6 @@ public class HomeActivity extends BaseActivity {
                     return oldItem.getKey().equals(newItem.getKey());
                 }
             }, sites, sites.indexOf(ApiConfig.get().getHomeSourceBean()));
-            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-
-
-                }
-            });
-            dialog.show();
-        }
-    }
-    void showSiteSwitch2() {
-        List<SourceBean> sites = ApiConfig.get().getSourceBeanList();        
-        if (sites.size() > 0) {
-            SelectDialog<SourceBean> dialog = new SelectDialog<>(HomeActivity.this);
-            dialog.setTip("点击打开临时源");
-            TvRecyclerView tvRecyclerView = dialog.findViewById(R.id.list);
-            tvRecyclerView.setLayoutManager(new V7GridLayoutManager(dialog.getContext(), 3));
-            ConstraintLayout cl_root = dialog.findViewById(R.id.cl_root);
-            ViewGroup.LayoutParams clp = cl_root.getLayoutParams();
-            clp.width = AutoSizeUtils.mm2px(dialog.getContext(), 800);
-
-            dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<SourceBean>() {
-                @Override
-                public void click(SourceBean value, int pos) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("type", "SourceHome");
-                    bundle.putStringArray("sourceKey", new String[]{value.getKey()});
-                    jumpActivity(SourceHomeActivity.class, bundle);
-                    //dialog.dismiss();
-                }
-
-                @Override
-                public String getDisplay(SourceBean val) {
-                    return val.getName();
-                }
-            }, new DiffUtil.ItemCallback<SourceBean>() {
-                @Override
-                public boolean areItemsTheSame(@NonNull @NotNull SourceBean oldItem, @NonNull @NotNull SourceBean newItem) {
-                    return oldItem == newItem;
-                }
-
-                @Override
-                public boolean areContentsTheSame(@NonNull @NotNull SourceBean oldItem, @NonNull @NotNull SourceBean newItem) {
-                    return oldItem.getKey().equals(newItem.getKey());
-                }
-            }, sites, sites.indexOf(ApiConfig.get().getHomeSourceBean()));
-
             dialog.show();
         }
     }
