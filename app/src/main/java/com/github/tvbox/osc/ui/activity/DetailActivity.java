@@ -237,7 +237,6 @@ public class DetailActivity extends BaseActivity {
                 }
             }
         });
-
         // takagen99 : Added click Image Thummb or Preview Window to play video
         ivThumb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -250,10 +249,7 @@ public class DetailActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 FastClickCheckUtil.check(v);
-                if(Hawk.get(HawkConfig.APP_MODLE,defaultValue:0)==0)
-                    toggleFullPreview();
-                else 
-                    playFragment.getVodController().showBottom();                
+                toggleFullPreview();
             }
         });
 
