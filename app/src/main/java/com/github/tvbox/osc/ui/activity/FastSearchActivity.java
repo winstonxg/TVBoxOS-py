@@ -300,8 +300,6 @@ public class FastSearchActivity extends BaseActivity {
                         } catch (Throwable th) {
                             th.printStackTrace();
                         }
-                      //quickSearchWord.add(searchTitle);
-                      //EventBus.getDefault().post(new RefreshEvent(RefreshEvent.TYPE_QUICK_SEARCH_WORD, quickSearchWord));
                         quickSearchWord.addAll(SearchHelper.splitWords(searchTitle));
                         List<String> words = new ArrayList<>(new HashSet<>(quickSearchWord));
                         EventBus.getDefault().post(new RefreshEvent(RefreshEvent.TYPE_QUICK_SEARCH_WORD, words));
