@@ -73,6 +73,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -199,7 +200,7 @@ public class DetailActivity extends BaseActivity {
         seriesGroupAdapter = new BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_series_group, seriesGroupOptions) {
             @Override
             protected void convert(BaseViewHolder helper, String item) {
-                TextView tvSeries = helper.getView(R.id.tvSeriesFlag);
+                TextView tvSeries = helper.getView(R.id.tvSeriesGroup);
                 tvSeries.setText(item);
             }
         };
@@ -393,18 +394,18 @@ public class DetailActivity extends BaseActivity {
         mSeriesGroupView.setOnItemListener(new TvRecyclerView.OnItemListener() {
             @Override
             public void onItemPreSelected(TvRecyclerView parent, View itemView, int position) {
-                TextView txtView = itemView.findViewById(R.id.tvSeriesFlag);
+                TextView txtView = itemView.findViewById(R.id.tvSeriesGroup);
                 txtView.setTextColor(Color.WHITE);
                 currentSeriesGroupView = null;
             }
 
             @Override
             public void onItemSelected(TvRecyclerView parent, View itemView, int position) {
-                TextView txtView = itemView.findViewById(R.id.tvSeriesFlag);
+                TextView txtView = itemView.findViewById(R.id.tvSeriesGroup);
                 txtView.setTextColor(mContext.getResources().getColor(R.color.color_02F8E1));
                 if (vodInfo != null && vodInfo.seriesMap.get(vodInfo.playFlag).size() > 0) {
                     int targetPos = position * GroupCount;
-                    mGridView.smoothScrollToPosition(targetPos);
+                    mGridView.scrollToPosition(targetPos);
                 }
                 currentSeriesGroupView = itemView;
                 currentSeriesGroupView.isSelected();
@@ -418,14 +419,14 @@ public class DetailActivity extends BaseActivity {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 FastClickCheckUtil.check(view);
                 if(currentSeriesGroupView != null) {
-                    TextView txtView = currentSeriesGroupView.findViewById(R.id.tvSeriesFlag);
+                    TextView txtView = currentSeriesGroupView.findViewById(R.id.tvSeriesGroup);
                     txtView.setTextColor(Color.WHITE);
                 }
-                TextView newTxtView = view.findViewById(R.id.tvSeriesFlag);
+                TextView newTxtView = view.findViewById(R.id.tvSeriesGroup);
                 newTxtView.setTextColor(mContext.getResources().getColor(R.color.color_02F8E1));
                 if (vodInfo != null && vodInfo.seriesMap.get(vodInfo.playFlag).size() > 0) {
                     int targetPos =  position * GroupCount;
-                    mGridView.smoothScrollToPosition(targetPos);
+                    mGridView.scrollToPosition(targetPos);
                 }
                 currentSeriesGroupView = view;
                 currentSeriesGroupView.isSelected();
@@ -655,8 +656,8 @@ public class DetailActivity extends BaseActivity {
                         // startQuickSearch();
                     } else {
                         mGridViewFlag.setVisibility(View.GONE);
-                        mSeriesGroupView.setVisibility(View.GONE);
                         mGridView.setVisibility(View.GONE);
+                        mSeriesGroupView.setVisibility(View.GONE);
                         tvPlay.setVisibility(View.GONE);
                         mEmptyPlayList.setVisibility(View.VISIBLE);
                     }
@@ -763,7 +764,7 @@ public class DetailActivity extends BaseActivity {
         quickSearchWord.clear();
         searchTitle = mVideo.name;
         quickSearchData.clear();
-        quickSearchWord.add(searchTitle);
+        quickSearchWord.addAll(SearchHelper.splitWords(searchTitle));
         // 分词
         OkGo.<String>get("http://api.pullword.com/get.php?source=" + URLEncoder.encode(searchTitle) + "&param1=0&param2=0&json=1")
                 .tag("fenci")
@@ -780,7 +781,6 @@ public class DetailActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Response<String> response) {
                         String json = response.body();
-                        quickSearchWord.clear();
                         try {
                             for (JsonElement je : new Gson().fromJson(json, JsonArray.class)) {
                                 quickSearchWord.add(je.getAsJsonObject().get("t").getAsString());
@@ -788,8 +788,8 @@ public class DetailActivity extends BaseActivity {
                         } catch (Throwable th) {
                             th.printStackTrace();
                         }
-                        quickSearchWord.add(searchTitle);
-                        EventBus.getDefault().post(new RefreshEvent(RefreshEvent.TYPE_QUICK_SEARCH_WORD, quickSearchWord));
+                        List<String> words = new ArrayList<>(new HashSet<>(quickSearchWord));
+                        EventBus.getDefault().post(new RefreshEvent(RefreshEvent.TYPE_QUICK_SEARCH_WORD, words));
                     }
 
                     @Override
@@ -885,6 +885,8 @@ public class DetailActivity extends BaseActivity {
                 return;
             toggleFullPreview();
             mGridView.requestFocus();
+            List<VodInfo.VodSeries> list = vodInfo.seriesMap.get(vodInfo.playFlag);
+            mSeriesGroupView.setVisibility(list.size()>GroupCount ? View.VISIBLE : View.GONE);
             return;
         }
         if (seriesSelect) {
