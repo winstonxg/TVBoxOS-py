@@ -54,6 +54,7 @@ public class SearchHelper {
         }
         return mCheckSources;
     }
+
     public static List<String> splitWords(String text) {
         List<String> result = new ArrayList<>();
         result.add(text);
@@ -63,4 +64,5 @@ public class SearchHelper {
         }
         return result;
     }
+
 }
