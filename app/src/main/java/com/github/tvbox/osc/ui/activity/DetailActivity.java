@@ -99,6 +99,7 @@ public class DetailActivity extends BaseActivity {
     private View llPlayerPlace;
     private PlayFragment playFragment = null;
     private ImageView ivThumb;
+    private ImageView tvPlayUrl;
     private TextView tvName;
     private TextView tvYear;
     private TextView tvSite;
