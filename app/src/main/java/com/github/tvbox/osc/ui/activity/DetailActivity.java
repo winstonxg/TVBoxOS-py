@@ -73,7 +73,6 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -200,7 +199,7 @@ public class DetailActivity extends BaseActivity {
         seriesGroupAdapter = new BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_series_group, seriesGroupOptions) {
             @Override
             protected void convert(BaseViewHolder helper, String item) {
-                TextView tvSeries = helper.getView(R.id.tvSeriesGroup);
+                TextView tvSeries = helper.getView(R.id.tvSeriesFlag);
                 tvSeries.setText(item);
             }
         };
@@ -208,6 +207,8 @@ public class DetailActivity extends BaseActivity {
 
         //禁用播放地址焦点
         tvPlayUrl.setFocusable(false);
+
+        llPlayerFragmentContainerBlock.setOnClickListener((view -> toggleFullPreview()));
 
         tvSort.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("NotifyDataSetChanged")
@@ -238,21 +239,6 @@ public class DetailActivity extends BaseActivity {
                 } else {
                     jumpToPlay();
                 }
-            }
-        });
-        // takagen99 : Added click Image Thummb or Preview Window to play video
-        ivThumb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FastClickCheckUtil.check(v);
-                jumpToPlay();
-            }
-        });
-        llPlayerFragmentContainerBlock.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FastClickCheckUtil.check(v);
-                toggleFullPreview();
             }
         });
 
@@ -302,12 +288,11 @@ public class DetailActivity extends BaseActivity {
                 }
             }
         });
-
         tvPlayUrl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //获取剪切板管理器
-                ClipboardManager cm = (ClipboardManager) getSystemService(mContext.CLIPBOARD_SERVICE);
+                ClipboardManager cm = (ClipboardManager)getSystemService(mContext.CLIPBOARD_SERVICE);
                 //设置内容到剪切板
                 cm.setPrimaryClip(ClipData.newPlainText(null, tvPlayUrl.getText().toString().replace("播放地址：","")));
                 Toast.makeText(DetailActivity.this, "已复制", Toast.LENGTH_SHORT).show();
@@ -408,18 +393,18 @@ public class DetailActivity extends BaseActivity {
         mSeriesGroupView.setOnItemListener(new TvRecyclerView.OnItemListener() {
             @Override
             public void onItemPreSelected(TvRecyclerView parent, View itemView, int position) {
-                TextView txtView = itemView.findViewById(R.id.tvSeriesGroup);
+                TextView txtView = itemView.findViewById(R.id.tvSeriesFlag);
                 txtView.setTextColor(Color.WHITE);
                 currentSeriesGroupView = null;
             }
 
             @Override
             public void onItemSelected(TvRecyclerView parent, View itemView, int position) {
-                TextView txtView = itemView.findViewById(R.id.tvSeriesGroup);
+                TextView txtView = itemView.findViewById(R.id.tvSeriesFlag);
                 txtView.setTextColor(mContext.getResources().getColor(R.color.color_02F8E1));
                 if (vodInfo != null && vodInfo.seriesMap.get(vodInfo.playFlag).size() > 0) {
                     int targetPos = position * GroupCount;
-                    mGridView.scrollToPosition(targetPos);
+                    mGridView.smoothScrollToPosition(targetPos);
                 }
                 currentSeriesGroupView = itemView;
                 currentSeriesGroupView.isSelected();
@@ -433,14 +418,14 @@ public class DetailActivity extends BaseActivity {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 FastClickCheckUtil.check(view);
                 if(currentSeriesGroupView != null) {
-                    TextView txtView = currentSeriesGroupView.findViewById(R.id.tvSeriesGroup);
+                    TextView txtView = currentSeriesGroupView.findViewById(R.id.tvSeriesFlag);
                     txtView.setTextColor(Color.WHITE);
                 }
-                TextView newTxtView = view.findViewById(R.id.tvSeriesGroup);
+                TextView newTxtView = view.findViewById(R.id.tvSeriesFlag);
                 newTxtView.setTextColor(mContext.getResources().getColor(R.color.color_02F8E1));
                 if (vodInfo != null && vodInfo.seriesMap.get(vodInfo.playFlag).size() > 0) {
                     int targetPos =  position * GroupCount;
-                    mGridView.scrollToPosition(targetPos);
+                    mGridView.smoothScrollToPosition(targetPos);
                 }
                 currentSeriesGroupView = view;
                 currentSeriesGroupView.isSelected();
@@ -665,12 +650,13 @@ public class DetailActivity extends BaseActivity {
                             jumpToPlay();
                             llPlayerFragmentContainer.setVisibility(View.VISIBLE);
                             llPlayerFragmentContainerBlock.setVisibility(View.VISIBLE);
+                            llPlayerFragmentContainerBlock.requestFocus();
                         }
                         // startQuickSearch();
                     } else {
                         mGridViewFlag.setVisibility(View.GONE);
-                        mGridView.setVisibility(View.GONE);
                         mSeriesGroupView.setVisibility(View.GONE);
+                        mGridView.setVisibility(View.GONE);
                         tvPlay.setVisibility(View.GONE);
                         mEmptyPlayList.setVisibility(View.VISIBLE);
                     }
@@ -777,8 +763,7 @@ public class DetailActivity extends BaseActivity {
         quickSearchWord.clear();
         searchTitle = mVideo.name;
         quickSearchData.clear();
-      //quickSearchWord.add(searchTitle);
-        quickSearchWord.addAll(SearchHelper.splitWords(searchTitle));
+        quickSearchWord.add(searchTitle);
         // 分词
         OkGo.<String>get("http://api.pullword.com/get.php?source=" + URLEncoder.encode(searchTitle) + "&param1=0&param2=0&json=1")
                 .tag("fenci")
@@ -795,7 +780,7 @@ public class DetailActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Response<String> response) {
                         String json = response.body();
-                      //quickSearchWord.clear();
+                        quickSearchWord.clear();
                         try {
                             for (JsonElement je : new Gson().fromJson(json, JsonArray.class)) {
                                 quickSearchWord.add(je.getAsJsonObject().get("t").getAsString());
@@ -803,10 +788,8 @@ public class DetailActivity extends BaseActivity {
                         } catch (Throwable th) {
                             th.printStackTrace();
                         }
-                      //quickSearchWord.add(searchTitle);
-                      //EventBus.getDefault().post(new RefreshEvent(RefreshEvent.TYPE_QUICK_SEARCH_WORD, quickSearchWord));
-                        List<String> words = new ArrayList<>(new HashSet<>(quickSearchWord));
-                        EventBus.getDefault().post(new RefreshEvent(RefreshEvent.TYPE_QUICK_SEARCH_WORD, words));
+                        quickSearchWord.add(searchTitle);
+                        EventBus.getDefault().post(new RefreshEvent(RefreshEvent.TYPE_QUICK_SEARCH_WORD, quickSearchWord));
                     }
 
                     @Override
@@ -902,8 +885,6 @@ public class DetailActivity extends BaseActivity {
                 return;
             toggleFullPreview();
             mGridView.requestFocus();
-            List<VodInfo.VodSeries> list = vodInfo.seriesMap.get(vodInfo.playFlag);
-            mSeriesGroupView.setVisibility(list.size()>GroupCount ? View.VISIBLE : View.GONE);
             return;
         }
         if (seriesSelect) {
@@ -924,18 +905,6 @@ public class DetailActivity extends BaseActivity {
         }
         return super.dispatchKeyEvent(event);
     }
-
-   // @Override
-  //  public boolean dispatchTouchEvent(MotionEvent ev) {
-   //     if (showPreview && !fullWindows) {
-   //         Rect editTextRect = new Rect();
-     //       llPlayerFragmentContainerBlock.getHitRect(editTextRect);
-   //         if (editTextRect.contains((int) ev.getX(), (int) ev.getY())) {
-   //             return true;
-    //        }
-     //   }
-    //    return super.dispatchTouchEvent(ev);
-  //  }
 
     // preview
     VodInfo previewVodInfo = null;
