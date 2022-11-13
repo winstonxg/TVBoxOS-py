@@ -921,17 +921,17 @@ public class DetailActivity extends BaseActivity {
         return super.dispatchKeyEvent(event);
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (showPreview && !fullWindows) {
-            Rect editTextRect = new Rect();
-            llPlayerFragmentContainerBlock.getHitRect(editTextRect);
-            if (editTextRect.contains((int) ev.getX(), (int) ev.getY())) {
-                return true;
-            }
-        }
-        return super.dispatchTouchEvent(ev);
-    }
+   // @Override
+  //  public boolean dispatchTouchEvent(MotionEvent ev) {
+   //     if (showPreview && !fullWindows) {
+   //         Rect editTextRect = new Rect();
+     //       llPlayerFragmentContainerBlock.getHitRect(editTextRect);
+   //         if (editTextRect.contains((int) ev.getX(), (int) ev.getY())) {
+   //             return true;
+    //        }
+     //   }
+    //    return super.dispatchTouchEvent(ev);
+  //  }
 
     // preview
     VodInfo previewVodInfo = null;
