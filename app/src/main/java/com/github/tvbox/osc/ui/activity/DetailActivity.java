@@ -225,16 +225,13 @@ public class DetailActivity extends BaseActivity {
                 }
             }
         });
+
         tvPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FastClickCheckUtil.check(v);
                 if (showPreview) {
                     toggleFullPreview();
-                    if(firstReverse){
-                        jumpToPlay();
-                        firstReverse=false;
-                    }
                 } else {
                     jumpToPlay();
                 }
