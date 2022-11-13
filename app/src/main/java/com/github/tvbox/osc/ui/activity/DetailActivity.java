@@ -99,7 +99,6 @@ public class DetailActivity extends BaseActivity {
     private View llPlayerPlace;
     private PlayFragment playFragment = null;
     private ImageView ivThumb;
-    private ImageView tvPlayUrl;
     private TextView tvName;
     private TextView tvYear;
     private TextView tvSite;
@@ -108,7 +107,7 @@ public class DetailActivity extends BaseActivity {
     private TextView tvType;
     private TextView tvActor;
     private TextView tvDirector;
-  //  private TextView tvPlayUrl;
+    private TextView tvPlayUrl;
     private TextView tvDes;
     private TextView tvPlay;
     private TextView tvSort;
@@ -226,13 +225,16 @@ public class DetailActivity extends BaseActivity {
                 }
             }
         });
-
         tvPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FastClickCheckUtil.check(v);
                 if (showPreview) {
                     toggleFullPreview();
+                    if(firstReverse){
+                        jumpToPlay();
+                        firstReverse=false;
+                    }
                 } else {
                     jumpToPlay();
                 }
@@ -300,26 +302,17 @@ public class DetailActivity extends BaseActivity {
                 }
             }
         });
+
         tvPlayUrl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //获取剪切板管理器
-                ClipboardManager cm = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                ClipboardManager cm = (ClipboardManager) getSystemService(mContext.CLIPBOARD_SERVICE);
                 //设置内容到剪切板
-                cm.setPrimaryClip(ClipData.newPlainText(null, vodInfo.seriesMap.get(vodInfo.playFlag).get(0).url));
-                Toast.makeText(DetailActivity.this, getString(R.string.det_url), Toast.LENGTH_SHORT).show();
+                cm.setPrimaryClip(ClipData.newPlainText(null, tvPlayUrl.getText().toString().replace("播放地址：","")));
+                Toast.makeText(DetailActivity.this, "已复制", Toast.LENGTH_SHORT).show();
             }
         });
-      //tvPlayUrl.setOnClickListener(new View.OnClickListener() {
-       //     @Override
-         //   public void onClick(View v) {
-                //获取剪切板管理器
-         //       ClipboardManager cm = (ClipboardManager) getSystemService(mContext.CLIPBOARD_SERVICE);
-                //设置内容到剪切板
-         //       cm.setPrimaryClip(ClipData.newPlainText(null, tvPlayUrl.getText().toString().replace("播放地址：","")));
-         //       Toast.makeText(DetailActivity.this, "已复制", Toast.LENGTH_SHORT).show();
-         //   }
-      //  });
         mGridView.setOnItemListener(new TvRecyclerView.OnItemListener() {
             @Override
             public void onItemPreSelected(TvRecyclerView parent, View itemView, int position) {
