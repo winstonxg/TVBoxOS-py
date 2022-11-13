@@ -26,7 +26,7 @@
                 android:layout_width="@dimen/vs_225"
                 android:layout_height="@dimen/vs_300"
                 android:clickable="true"
-                android:focusable="true"
+                android:focusable="false"
                 android:scaleType="fitXY" />
 
             <View
@@ -309,5 +309,6 @@
         android:layout_marginLeft="@dimen/vs_50"
         android:layout_marginTop="@dimen/vs_20"
         android:layout_marginBottom="@dimen/vs_10"
+        android:focusable="true"
         android:visibility="gone" />
 </FrameLayout>
