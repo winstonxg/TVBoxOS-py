@@ -250,7 +250,10 @@ public class DetailActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 FastClickCheckUtil.check(v);
-                toggleFullPreview();
+                if(Hawk.get(HawkConfig.APP_MODLE,defaultValue:0) == 0)
+                    toggleFullPreview();
+                else 
+                    playFragment.getVodController().showBottom();                
             }
         });
 
